@@ -1,9 +1,11 @@
 import RowAvatar from "@/components/home/row-avatar";
+import NavBar from "@/components/main-nav";
 import Post from "@/components/post";
 
 export default function Home() {
   return (
     <>
+      <NavBar />
       {/* CircleAvatars to Follow */}
       <RowAvatar />
       {/* Posts */}

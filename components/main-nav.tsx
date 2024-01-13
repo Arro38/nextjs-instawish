@@ -1,7 +1,7 @@
 import React from "react";
 import { PlusIcon } from "@radix-ui/react-icons";
-import { Dancing_Script } from "next/font/google";
 import CircleAvatar from "./ui/circle-avatar";
+import { Dancing_Script } from "next/font/google";
 const dancing_script = Dancing_Script({ subsets: ["latin"], weight: "700" });
 function NavBar() {
   return (
