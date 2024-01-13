@@ -18,7 +18,7 @@ export default function RootLayout({
   return (
     <html lang="fr">
       <body className={inter.className}>
-        <main className="flex min-h-screen flex-col items-center justify-between p-6 w-96 bg-red-300 rounded-lg m-auto">
+        <main className="flex min-h-screen flex-col items-center justify-start gap-4 p-6 w-96 bg-slate-100 rounded-lg m-auto">
           {/* NavBar */}
           <NavBar />
           {/* Footer */}
