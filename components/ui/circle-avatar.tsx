@@ -4,9 +4,11 @@ export default function CircleAvatar({
   src,
   alt,
   size = "lg",
+  avatarFallback,
 }: {
-  src: string;
+  src?: string;
   alt: string;
+  avatarFallback?: React.ReactNode;
   size?: "sm" | "lg" | "md";
 }) {
   return (
@@ -16,7 +18,7 @@ export default function CircleAvatar({
       }
     >
       <AvatarImage src={src} alt={alt} />
-      <AvatarFallback>{alt}</AvatarFallback>
+      <AvatarFallback>{avatarFallback ? avatarFallback : alt}</AvatarFallback>
     </Avatar>
   );
 }

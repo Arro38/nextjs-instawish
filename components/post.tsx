@@ -7,6 +7,15 @@ import {
   HeartIcon,
   PaperPlaneIcon,
 } from "@radix-ui/react-icons";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+
 // Instagram post
 export default function Post() {
   return (
@@ -23,7 +32,17 @@ export default function Post() {
           </div>
           <span className="mx-16">Username</span>
         </div>
-        <DotsVerticalIcon className="size-10 p-1" />
+        <DropdownMenu>
+          <DropdownMenuTrigger>
+            <DotsVerticalIcon className="size-10 p-1" />
+          </DropdownMenuTrigger>
+          <DropdownMenuContent>
+            <DropdownMenuLabel>Username</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>Voir le profil</DropdownMenuItem>
+            <DropdownMenuItem>Ne plus suivre</DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
 
       {/* post image */}
@@ -38,7 +57,7 @@ export default function Post() {
       {/* post actions */}
       <div className="flex justify-between mt-6 w-72">
         {/* Icons */}
-        <div className="flex gap-2 border px-2 bg-slate-100 rounded-xl border-primary items-center">
+        <div className="flex gap-2 border px-2  rounded-xl border-primary items-center">
           <ChatBubbleIcon className="size-6" />
           <HeartIcon className="size-8  -translate-y-4 border-2 rounded-full p-1 border-primary bg-slate-100" />
           <PaperPlaneIcon className="size-6" />
