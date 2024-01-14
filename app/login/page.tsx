@@ -2,6 +2,7 @@ import { LoginForm } from "@/components/login/login-form";
 import { Separator } from "@/components/ui/separator";
 import { Dancing_Script } from "next/font/google";
 import Link from "next/link";
+
 const dancing_script = Dancing_Script({ subsets: ["latin"], weight: "700" });
 
 export default function Login() {
