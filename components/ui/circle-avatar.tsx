@@ -17,7 +17,7 @@ export default function CircleAvatar({
         size === "lg" ? " h-16 w-16" : size === "md" ? "h-14 w-14" : ""
       }
     >
-      <AvatarImage src={src} alt={alt} />
+      <AvatarImage src={process.env.NEXT_PUBLIC_BASE_URL! + src} alt={alt} />
       <AvatarFallback>{avatarFallback ? avatarFallback : alt}</AvatarFallback>
     </Avatar>
   );

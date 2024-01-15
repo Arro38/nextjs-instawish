@@ -46,14 +46,22 @@ export function LoginForm() {
   const router = useRouter();
 
   function onSubmit(data: z.infer<typeof FormSchema>) {
-    login(data.username, data.password)
-      .then((res) => {
-        toast(res.message);
+    try {
+      login(data.username, data.password).then(() => {
+        toast({
+          title: "Connexion réussie",
+          description: "Vous êtes maintenant connecté",
+        });
         router.push("/");
-      })
-      .catch((err) => {
-        toast(err.message);
       });
+    } catch (error) {
+      // TODO FIX TOAST ERROR ON LOGIN
+      console.log(error);
+      toast({
+        title: "Erreur",
+        description: "Nom d'utilisateur ou mot de passe incorrect",
+      });
+    }
   }
 
   return (

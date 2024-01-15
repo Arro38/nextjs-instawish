@@ -1,30 +1,21 @@
 import { useEffect, useState } from "react";
 import Cookies from "js-cookie";
+import { useAppDispatch } from "../redux/useStore";
+import { fetchMe } from "@/lib/features/users/usersSlice";
 
 export const useCurrentUser = () => {
   const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     const currentToken = Cookies.get("token");
-    if (currentToken) {
+    const expires = Cookies.get("expires");
+    if (currentToken && expires && new Date(expires) > new Date()) {
       setToken(currentToken);
     }
   }, []);
-
-  //   const refetchUser = async (userId: string) => {
-  //     const userInfo = await authService.getMe(userId);
-  //     const currentUser = Cookies.get("currentUser");
-
-  //     if (userInfo && currentUser) {
-  //       const newUser = {
-  //         ...JSON.parse(currentUser),
-  //         username: userInfo.username,
-  //         avatar: userInfo.avatar,
-  //       };
-  //       Cookies.set("currentUser", JSON.stringify(newUser));
-  //       setUser(newUser);
-  //     }
-  //   };
+  // Using the token, you can now make authenticated requests to the API.
+  // For example, you can fetch the current user:
+  // using redux toolkit
 
   return { token };
 };

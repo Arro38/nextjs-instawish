@@ -1,4 +1,5 @@
-import React from "react";
+"use client";
+import React, { useEffect } from "react";
 import { PlusIcon } from "@radix-ui/react-icons";
 import CircleAvatar from "./ui/circle-avatar";
 import { Dancing_Script } from "next/font/google";
@@ -10,8 +11,18 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useLogout } from "@/hooks/auth/useLogout";
+import { useRouter } from "next/navigation";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux/useStore";
+import { reset } from "@/lib/features/users/usersSlice";
+
 const dancing_script = Dancing_Script({ subsets: ["latin"], weight: "700" });
 function NavBar() {
+  const { logout } = useLogout();
+  const router = useRouter();
+  const dispatch = useAppDispatch();
+  const user = useAppSelector((state) => state.users.user);
+
   return (
     <nav className="flex justify-between items-center w-full ">
       {/* Icon Add */}
@@ -25,17 +36,26 @@ function NavBar() {
 
       <DropdownMenu>
         <DropdownMenuTrigger>
-          <CircleAvatar
-            src={"https://github.com/shadcn.png"}
-            alt={"EV"}
-            size="sm"
-          />
+          <CircleAvatar src={user?.imageUrl} alt={"EV"} size="sm" />
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           <DropdownMenuLabel>EV</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>Mon profil</DropdownMenuItem>
-          <DropdownMenuItem>Se déconnecter</DropdownMenuItem>
+          <DropdownMenuItem className="cursor-pointer line-through ">
+            Mon profil
+          </DropdownMenuItem>
+          <DropdownMenuItem
+            className="cursor-pointer text-destructive"
+            onClick={() => {
+              logout();
+              // reset the store
+              dispatch(reset());
+
+              router.push("/login");
+            }}
+          >
+            Se déconnecter
+          </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
     </nav>
