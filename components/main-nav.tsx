@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect } from "react";
+import React from "react";
 import { PlusIcon } from "@radix-ui/react-icons";
 import CircleAvatar from "./ui/circle-avatar";
 import { Dancing_Script } from "next/font/google";
@@ -15,6 +15,7 @@ import { useLogout } from "@/hooks/auth/useLogout";
 import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux/useStore";
 import { reset } from "@/lib/features/users/usersSlice";
+import Link from "next/link";
 
 const dancing_script = Dancing_Script({ subsets: ["latin"], weight: "700" });
 function NavBar() {
@@ -41,9 +42,11 @@ function NavBar() {
         <DropdownMenuContent>
           <DropdownMenuLabel>EV</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem className="cursor-pointer line-through ">
-            Mon profil
-          </DropdownMenuItem>
+          <Link href={`/user/${user?.id}`}>
+            <DropdownMenuItem className="cursor-pointer">
+              Mon profil
+            </DropdownMenuItem>
+          </Link>
           <DropdownMenuItem
             className="cursor-pointer text-destructive"
             onClick={() => {

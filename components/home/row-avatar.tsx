@@ -12,7 +12,7 @@ import { useAppSelector } from "@/hooks/redux/useStore";
 function RowAvatar() {
   const [showSearchInput, setShowSearchInput] = useState(false);
   const [users, setUsers] = useState<User[]>([]);
-  const followings = useAppSelector((state) => state.users.following);
+  const followings = useAppSelector((state) => state.users.followings);
 
   useEffect(() => {
     const fetchUsers = async () => {
@@ -61,10 +61,7 @@ function RowAvatar() {
                       alt={user.username}
                       size="md"
                     />
-                    {/* if i'm not follow the user add + icon */}
-                    {followings.find(
-                      (f: { id: number }) => f.id === user.id
-                    ) ? null : (
+                    {followings.find((f) => f.id === user.id) ? null : (
                       <PlusIcon className="border-2 border-primary rounded-lg size-6 p-1 absolute bottom-0 right-0 bg-white" />
                     )}
                   </div>

@@ -5,7 +5,6 @@ import {
   fetchFollowers,
   fetchFollowing,
   fetchMe,
-  selectUser,
 } from "@/lib/features/users/usersSlice";
 import { useEffect } from "react";
 import { Toaster } from "./ui/toaster";

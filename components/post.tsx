@@ -15,9 +15,29 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
 
 // Instagram post
-export default function Post() {
+export default function Post({ post }: { post: Post }) {
+  const getTimeAgo = (timestamp: number): string => {
+    const currentDate = new Date();
+    const createdAtDate = new Date(timestamp * 1000);
+    const timeDiff = Math.abs(currentDate.getTime() - createdAtDate.getTime());
+    const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+    if (daysDiff > 0) {
+      return `${daysDiff} days ago`;
+    }
+    const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
+    if (hoursDiff > 0) {
+      return `${hoursDiff} hours ago`;
+    }
+    const minutesDiff = Math.floor(timeDiff / (1000 * 60));
+    if (minutesDiff > 0) {
+      return `${minutesDiff} minutes ago`;
+    }
+    const secondsDiff = Math.floor(timeDiff / 1000);
+    return `${secondsDiff} seconds ago`;
+  };
   return (
     <div>
       {/* user row */}
@@ -25,21 +45,23 @@ export default function Post() {
         <div className=" flex items-center bg-primary-foreground relative shadow-lg rounded-3xl w-72 p-2">
           <div className="absolute left-0">
             <CircleAvatar
-              src={"https://github.com/shadcn.png"}
-              alt={"EV"}
+              src={post.imageUrl}
+              alt={post.createdBy.username}
               size="md"
             />
           </div>
-          <span className="mx-16">Username</span>
+          <span className="mx-16">{post.createdBy.username}</span>
         </div>
         <DropdownMenu>
           <DropdownMenuTrigger>
             <DotsVerticalIcon className="size-10 p-1" />
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuLabel>Username</DropdownMenuLabel>
+            <DropdownMenuLabel>{post.createdBy.username}</DropdownMenuLabel>
             <DropdownMenuSeparator />
-            <DropdownMenuItem>Voir le profil</DropdownMenuItem>
+            <Link href={`/user/${post.createdBy.id}`}>
+              <DropdownMenuItem>Voir le profil</DropdownMenuItem>
+            </Link>
             <DropdownMenuItem>Ne plus suivre</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
@@ -49,7 +71,7 @@ export default function Post() {
       <div className="mt-3">
         <img
           className="rounded-3xl w-72 h-72 object-cover"
-          src="https://placekitten.com/640/640"
+          src={process.env.NEXT_PUBLIC_BASE_URL! + post.imageUrl}
           alt="post"
         />
       </div>
@@ -68,8 +90,10 @@ export default function Post() {
 
       {/* post likes */}
       <div className="mt-2 flex justify-between w-72">
-        <span className="">100 Likes</span>
-        <span className="text-primary">15 minutes ago</span>
+        <span className="">{post.likeds?.length} Likes</span>
+        <span className="text-primary">
+          {getTimeAgo(post.createdAt.timestamp)}
+        </span>
       </div>
     </div>
   );

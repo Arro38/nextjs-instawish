@@ -2,8 +2,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
 interface UserState {
-  followers: [];
-  following: [];
+  followers: User[];
+  followings: User[];
   user: User | null;
   loading: boolean;
   error: string | null | undefined;
@@ -11,7 +11,7 @@ interface UserState {
 
 const initialState: UserState = {
   followers: [],
-  following: [],
+  followings: [],
   user: null,
   loading: false,
   error: null,
@@ -44,7 +44,7 @@ export const fetchFollowers = createAsyncThunk(
         },
       }
     );
-    return response.data.followers.map((follower: any) => follower.follower);
+    return response.data;
   }
 );
 
@@ -59,30 +59,49 @@ export const fetchFollowing = createAsyncThunk(
         },
       }
     );
-    return response.data.followings.map(
-      (following: any) => following.following
-    );
+    return response.data;
     // return response.data;
   }
 );
 
 export const followUser = createAsyncThunk(
   "user/followUser",
-  async (id: number) => {
-    const response = await axios.post(
-      process.env["NEXT_PUBLIC_API_URL"] + "follow/add/" + id
-    );
-    return response.data;
+  async ({ token, id }: { token: string; id: number }) => {
+    console.log(token);
+    try {
+      const response = await axios.post(
+        process.env["NEXT_PUBLIC_API_URL"] + "follow/add/" + id,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
   }
 );
 
 export const unfollowUser = createAsyncThunk(
   "user/unfollowUser",
-  async (id: number) => {
-    const response = await axios.post(
-      process.env["NEXT_PUBLIC_API_URL"] + "follow/remove/" + id
-    );
-    return response.data;
+  async ({ token, id }: { token: string; id: number }) => {
+    try {
+      const response = await axios.post(
+        process.env["NEXT_PUBLIC_API_URL"] + "follow/remove/" + id,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      return response.data;
+    } catch (e) {
+      console.log(e);
+    }
   }
 );
 
@@ -93,7 +112,7 @@ export const userSlice = createSlice({
     // reset state
     reset: (state) => {
       state.followers = [];
-      state.following = [];
+      state.followings = [];
       state.user = null;
       state.loading = false;
       state.error = null;
@@ -126,7 +145,7 @@ export const userSlice = createSlice({
       state.loading = true;
     });
     builder.addCase(fetchFollowing.fulfilled, (state, action) => {
-      state.following = action.payload;
+      state.followings = action.payload;
       state.loading = false;
     });
     builder.addCase(fetchFollowing.rejected, (state, action) => {
