@@ -56,7 +56,7 @@ async function getFollowers(idUser: string) {
       throw new Error("Failed to fetch data");
     }
 
-    return res.data.followers.map((follower: any) => follower.follower);
+    return res.data;
   } catch (error) {
     console.log(error);
   }
@@ -75,7 +75,7 @@ async function getFollowing(idUser: string) {
       throw new Error("Failed to fetch data");
     }
 
-    return res.data.followings.map((following: any) => following.following);
+    return res.data;
   } catch (error) {
     console.log(error);
   }
@@ -101,7 +101,9 @@ export default async function UserPage({ params }: { params: { id: string } }) {
         <div className="flex items-center gap-4 justify-around">
           <CircleAvatar src={user?.imageUrl} alt={user?.username!} size="lg" />
           <div className="flex flex-col  text-center">
-            <span className="text-2xl font-bold">{posts?.length} </span>
+            <span className="text-2xl font-bold">
+              {posts ? posts.length : 0}{" "}
+            </span>
             <span>Posts</span>
           </div>
           <div className="flex flex-col text-center">

@@ -45,7 +45,7 @@ export default function Post({ post }: { post: Post }) {
         <div className=" flex items-center bg-primary-foreground relative shadow-lg rounded-3xl w-72 p-2">
           <div className="absolute left-0">
             <CircleAvatar
-              src={post.imageUrl}
+              src={post.createdBy.imageUrl}
               alt={post.createdBy.username}
               size="md"
             />
@@ -60,9 +60,13 @@ export default function Post({ post }: { post: Post }) {
             <DropdownMenuLabel>{post.createdBy.username}</DropdownMenuLabel>
             <DropdownMenuSeparator />
             <Link href={`/user/${post.createdBy.id}`}>
-              <DropdownMenuItem>Voir le profil</DropdownMenuItem>
+              <DropdownMenuItem className=" cursor-pointer">
+                Voir le profil
+              </DropdownMenuItem>
             </Link>
-            <DropdownMenuItem>Ne plus suivre</DropdownMenuItem>
+            <DropdownMenuItem className=" cursor-pointer">
+              Ne plus suivre
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>

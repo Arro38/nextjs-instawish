@@ -67,7 +67,6 @@ export const fetchFollowing = createAsyncThunk(
 export const followUser = createAsyncThunk(
   "user/followUser",
   async ({ token, id }: { token: string; id: number }) => {
-    console.log(token);
     try {
       const response = await axios.post(
         process.env["NEXT_PUBLIC_API_URL"] + "follow/add/" + id,
@@ -78,7 +77,7 @@ export const followUser = createAsyncThunk(
           },
         }
       );
-      return response.data;
+      return response.status === 200;
     } catch (e) {
       console.log(e);
     }
@@ -98,7 +97,7 @@ export const unfollowUser = createAsyncThunk(
           },
         }
       );
-      return response.data;
+      return response.status === 200;
     } catch (e) {
       console.log(e);
     }
