@@ -2,91 +2,19 @@ import NavBar from "@/components/main-nav";
 import { Button } from "@/components/ui/button";
 import CircleAvatar from "@/components/ui/circle-avatar";
 import FollowButton from "@/components/user/FollowButton";
+import { ApiService } from "@/services/api.service";
 import { ArrowLeftIcon, CheckCircledIcon } from "@radix-ui/react-icons";
-import axios from "axios";
-import { cookies } from "next/headers";
 import Link from "next/link";
-
-async function getPosts(id: string) {
-  try {
-    const url = process.env.NEXT_PUBLIC_API_URL + "home/" + id;
-    const res = await axios(url, {
-      headers: {
-        Authorization: `Bearer ${cookies().get("token")?.value}`,
-      },
-    });
-    if (res.status > 250 && res.statusText !== "OK") {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error("Failed to fetch data");
-    }
-    return res.data as Post[];
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function getUser(id: string) {
-  try {
-    const url = process.env.NEXT_PUBLIC_API_URL + "user/" + id;
-    const res = await axios(url, {
-      headers: {
-        Authorization: `Bearer ${cookies().get("token")?.value}`,
-      },
-    });
-    if (res.status > 250 && res.statusText !== "OK") {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error("Failed to fetch data");
-    }
-    return res.data as User;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function getFollowers(idUser: string) {
-  try {
-    const url = process.env.NEXT_PUBLIC_API_URL + "follow/followers/" + idUser;
-    const res = await axios(url, {
-      headers: {
-        Authorization: `Bearer ${cookies().get("token")?.value}`,
-      },
-    });
-    if (res.status > 250 && res.statusText !== "OK") {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error("Failed to fetch data");
-    }
-
-    return res.data;
-  } catch (error) {
-    console.log(error);
-  }
-}
-
-async function getFollowing(idUser: string) {
-  try {
-    const url = process.env.NEXT_PUBLIC_API_URL + "follow/followings/" + idUser;
-    const res = await axios(url, {
-      headers: {
-        Authorization: `Bearer ${cookies().get("token")?.value}`,
-      },
-    });
-    if (res.status > 250 && res.statusText !== "OK") {
-      // This will activate the closest `error.js` Error Boundary
-      throw new Error("Failed to fetch data");
-    }
-
-    return res.data;
-  } catch (error) {
-    console.log(error);
-  }
-}
+import { cookies } from "next/headers";
 
 export default async function UserPage({ params }: { params: { id: string } }) {
-  //   return <div>My Post: {params.id}</div>;
-  const posts = await getPosts(params.id);
-  const user = await getUser(params.id);
-  const followers = await getFollowers(params.id);
-  const following = await getFollowing(params.id);
+  const token = cookies().get("token")?.value;
+  const api = new ApiService(token!);
+  const userId = params.id;
+  const posts = await api.getPosts(userId);
+  const user = await api.getUser(userId);
+  const followers = await api.getFollowers(userId);
+  const following = await api.getFollowing(userId);
 
   return (
     <>
@@ -120,7 +48,7 @@ export default async function UserPage({ params }: { params: { id: string } }) {
           <span className="text-gray-400">{user?.email!}</span>
         </div>
         <div className="flex items-center gap-1 mb-6">
-          <FollowButton idUser={user?.id!} />
+          <FollowButton user={user!} />
           {/* <Button variant={"secondary"}>Unfollow</Button> */}
           <Link href={"mailto:" + user?.email!} passHref={true}>
             <Button variant={"outline"}>Email</Button>

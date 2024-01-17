@@ -2,18 +2,12 @@
 import { Button } from "../ui/button";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux/useStore";
 import Cookies from "js-cookie";
-import {
-  fetchFollowers,
-  fetchFollowing,
-  followUser,
-  unfollowUser,
-} from "@/lib/features/users/usersSlice";
+import { followUser, unfollowUser } from "@/lib/features/users/usersSlice";
 import { useEffect, useState } from "react";
-import Loading from "@/app/loading";
-import { set } from "react-hook-form";
 
-export default function FollowButton({ idUser }: { idUser: number }) {
+export default function FollowButton({ user }: { user: User }) {
   const followings = useAppSelector((state) => state.users.followings);
+
   const me = useAppSelector((state) => state.users.user);
   const token = Cookies.get("token");
   const dispatch = useAppDispatch();
@@ -24,7 +18,7 @@ export default function FollowButton({ idUser }: { idUser: number }) {
     try {
       await dispatch(
         unfollowUser({
-          id: idUser,
+          id: user.id,
           token: token!,
         })
       );
@@ -38,29 +32,29 @@ export default function FollowButton({ idUser }: { idUser: number }) {
     try {
       await dispatch(
         followUser({
-          id: idUser,
+          user: user,
           token: token!,
         })
       );
-      setIsFollowing(true);
+      // setIsFollowing(true);
     } catch (err) {
       console.log(err);
     }
   };
 
-  useEffect(() => {
-    if (followings!.find((following) => following.id === idUser))
-      setIsFollowing(true);
-    else setIsFollowing(false);
-  }, [followings]);
+  // useEffect(() => {
+  //   if (followings!.find((following) => following.id === user.id))
+  //     setIsFollowing(true);
+  //   else setIsFollowing(false);
+  // }, [followings]);
 
   return (
     <>
-      {me?.id === idUser ? (
+      {me?.id === user.id ? (
         <Button variant={"secondary"} disabled={loading}>
           Edit Profile
         </Button>
-      ) : isFollowing ? (
+      ) : followings!.find((following) => following.id === user.id) ? (
         <Button
           variant={"secondary"}
           disabled={loading}
@@ -73,7 +67,7 @@ export default function FollowButton({ idUser }: { idUser: number }) {
       ) : (
         <Button
           disabled={loading}
-          onClick={(e) => {
+          onClick={() => {
             handleFollow();
           }}
         >

@@ -28,7 +28,9 @@ interface Post {
   createdAt: CreatedAt;
   likeds: [
     {
-      id: string;
+      user: {
+        id: number;
+      };
     }
   ];
   comments: Comment[];

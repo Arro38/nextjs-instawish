@@ -66,10 +66,10 @@ export const fetchFollowing = createAsyncThunk(
 
 export const followUser = createAsyncThunk(
   "user/followUser",
-  async ({ token, id }: { token: string; id: number }) => {
+  async ({ token, user }: { token: string; user: User }) => {
     try {
       const response = await axios.post(
-        process.env["NEXT_PUBLIC_API_URL"] + "follow/add/" + id,
+        process.env["NEXT_PUBLIC_API_URL"] + "follow/add/" + user.id,
         {},
         {
           headers: {
@@ -156,6 +156,7 @@ export const userSlice = createSlice({
     });
     builder.addCase(followUser.fulfilled, (state, action) => {
       state.loading = false;
+      state.followings.push(action.meta.arg.user);
     });
     builder.addCase(followUser.rejected, (state, action) => {
       state.error = action.error.message;
@@ -166,6 +167,9 @@ export const userSlice = createSlice({
     });
     builder.addCase(unfollowUser.fulfilled, (state, action) => {
       state.loading = false;
+      state.followings = state.followings.filter(
+        (f) => f.id !== action.meta.arg.id
+      );
     });
     builder.addCase(unfollowUser.rejected, (state, action) => {
       state.error = action.error.message;

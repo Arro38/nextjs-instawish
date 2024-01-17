@@ -15,6 +15,8 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
+import axios from "axios";
+import { useState } from "react";
 
 const MAX_FILE_SIZE = 500000;
 const ACCEPTED_IMAGE_TYPES = [
@@ -48,17 +50,17 @@ const FormSchema = z
         /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$/,
         "Le mot de passe doit contenir au moins une lettre majuscule, une lettre minuscule et un chiffre"
       ),
-    profilePicture: z
-      .any()
-      .refine((files) => files?.length == 1, "Image is required.")
-      .refine(
-        (files) => files?.[0]?.size <= MAX_FILE_SIZE,
-        `Max file size is 5MB.`
-      )
-      .refine(
-        (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
-        ".jpg, .jpeg, .png and .webp files are accepted."
-      ),
+    profilePicture: z.any(),
+    // TODO : Fix profile picture validation
+    // .refine((files) => files?.length == 1, "Image is required.")
+    // .refine(
+    //   (files) => files?.[0]?.size <= MAX_FILE_SIZE,
+    //   `Max file size is 5MB.`
+    // )
+    // .refine(
+    //   (files) => ACCEPTED_IMAGE_TYPES.includes(files?.[0]?.type),
+    //   ".jpg, .jpeg, .png and .webp files are accepted."
+    // ),
   })
   .superRefine(({ confirmPassword, password }, ctx) => {
     if (confirmPassword !== password) {
@@ -81,7 +83,23 @@ export function RegisterForm() {
     },
   });
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  const [profilePicture, setProfilePicture] = useState<File | null>(null);
+
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
+    const formData = new FormData();
+    formData.append("username", data.username);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+    formData.append("profilePicture", profilePicture!);
+
+    try {
+      const res = await axios.post(
+        process.env.NEXT_PUBLIC_API_URL + "register",
+        formData
+      );
+    } catch (err) {
+      console.log(err);
+    }
     toast({
       title: "You submitted the following values:",
       description: (
@@ -154,7 +172,13 @@ export function RegisterForm() {
             <FormItem>
               <FormLabel>Photo de profil</FormLabel>
               <FormControl>
-                <Input type="file" {...field} />
+                <Input
+                  type="file"
+                  {...field}
+                  onChange={(e) => {
+                    setProfilePicture(e.target.files![0]);
+                  }}
+                />
               </FormControl>
               <FormMessage />
             </FormItem>

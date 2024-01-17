@@ -27,6 +27,7 @@ function NavBar() {
   return (
     <nav className="flex justify-between items-center w-full ">
       {/* Icon Add */}
+      {/* TODO: ADD POST */}
       <PlusIcon
         className="border-2 border-primary rounded-lg size-7 p-1"
         scale={3}
