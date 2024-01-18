@@ -26,8 +26,8 @@ export default function Post({ post }: { post: Post }) {
     <div>
       {/* user row */}
       <div className="flex items-center">
-        <Link href={`/user/${post.createdBy.id}`}>
-          <div className=" flex items-center bg-primary-foreground relative shadow-lg rounded-3xl w-72 p-2">
+        <Link href={`/user/${post.createdBy.id}`} className=" w-full">
+          <div className=" flex items-center bg-primary-foreground relative shadow-lg rounded-3xl  p-2">
             <div className="absolute left-0">
               <CircleAvatar
                 src={post.createdBy.imageUrl}
@@ -60,12 +60,12 @@ export default function Post({ post }: { post: Post }) {
       {/* post image */}
       <div className="mt-3">
         <img
-          className="rounded-3xl w-72 h-72 object-cover"
+          className="rounded-3xl w-full object-cover"
           src={process.env.NEXT_PUBLIC_BASE_URL! + post.imageUrl}
           alt="post"
         />
         {/* post description */}
-        <div className="flex items-center mt-2 w-72">
+        <div className="flex items-center mt-2 w-full">
           <span className="mx-2 font-bold">{post.createdBy.username}</span>
           {/* fix post description overflow x */}
           <span className=" overflow-clip">{post.description}</span>

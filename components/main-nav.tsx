@@ -16,6 +16,8 @@ import { useRouter } from "next/navigation";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux/useStore";
 import { reset } from "@/lib/features/users/usersSlice";
 import Link from "next/link";
+import { EditProfile } from "./home/edit-profile";
+import { AddPost } from "./post/add-post";
 
 const dancing_script = Dancing_Script({ subsets: ["latin"], weight: "700" });
 function NavBar() {
@@ -27,11 +29,8 @@ function NavBar() {
   return (
     <nav className="flex justify-between items-center w-full ">
       {/* Icon Add */}
-      {/* TODO: ADD POST */}
-      <PlusIcon
-        className="border-2 border-primary rounded-lg size-7 p-1"
-        scale={3}
-      />
+      <AddPost />
+
       {/* Title of App */}
       <h1 className={`${dancing_script.className} text-2xl`}>Instawish</h1>
       {/* Icon Messages */}
@@ -48,6 +47,13 @@ function NavBar() {
               Mon profil
             </DropdownMenuItem>
           </Link>
+          <DropdownMenuItem
+            onClick={(e) => {
+              e.preventDefault();
+            }}
+          >
+            <EditProfile />
+          </DropdownMenuItem>
           <DropdownMenuItem
             className="cursor-pointer text-destructive"
             onClick={() => {

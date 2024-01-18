@@ -11,16 +11,16 @@ export const getTimeAgo = (timestamp: number): string => {
   const timeDiff = Math.abs(currentDate.getTime() - createdAtDate.getTime());
   const daysDiff = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
   if (daysDiff > 0) {
-    return `${daysDiff} days ago`;
+    return `${daysDiff} jours`;
   }
   const hoursDiff = Math.floor(timeDiff / (1000 * 60 * 60));
   if (hoursDiff > 0) {
-    return `${hoursDiff} hours ago`;
+    return `${hoursDiff} heures`;
   }
   const minutesDiff = Math.floor(timeDiff / (1000 * 60));
   if (minutesDiff > 0) {
-    return `${minutesDiff} minutes ago`;
+    return `${minutesDiff} minutes`;
   }
   const secondsDiff = Math.floor(timeDiff / 1000);
-  return `${secondsDiff} seconds ago`;
+  return `${secondsDiff} secondes`;
 };

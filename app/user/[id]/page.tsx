@@ -6,6 +6,7 @@ import { ApiService } from "@/services/api.service";
 import { ArrowLeftIcon, CheckCircledIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { cookies } from "next/headers";
+import GridPosts from "@/components/user/GridPosts";
 
 export default async function UserPage({ params }: { params: { id: string } }) {
   const token = cookies().get("token")?.value;
@@ -56,19 +57,7 @@ export default async function UserPage({ params }: { params: { id: string } }) {
         </div>
 
         {/* grid of posts */}
-        {/* TODO :  VIEW Post description & comment */}
-        <div className="flex flex-wrap -m-6 ">
-          {posts?.map((post, i) => (
-            <div key={i} className="border border-white  w-1/3">
-              {/* JSX content */}
-              <img
-                className="  object-cover cursor-pointer"
-                src={process.env.NEXT_PUBLIC_BASE_URL + post.imageUrl}
-                alt={post.description}
-              />
-            </div>
-          ))}
-        </div>
+        {posts && <GridPosts posts={posts} />}
       </div>
     </>
   );

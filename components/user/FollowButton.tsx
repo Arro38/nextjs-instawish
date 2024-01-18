@@ -50,7 +50,7 @@ export default function FollowButton({ user }: { user: User }) {
 
   return (
     <>
-      {me?.id === user.id ? (
+      {me && me?.id === user.id ? (
         <Button variant={"secondary"} disabled={loading}>
           Edit Profile
         </Button>

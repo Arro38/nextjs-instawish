@@ -3,7 +3,7 @@ import { PlusIcon } from "@radix-ui/react-icons";
 import CircleAvatar from "../ui/circle-avatar";
 import { Input } from "@/components/ui/input";
 import { MagnifyingGlassIcon } from "@radix-ui/react-icons";
-import { ReactEventHandler, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import Cookies from "js-cookie";
@@ -45,7 +45,7 @@ function RowAvatar() {
           />
         </div>
         {/* CircleAvatar */}
-        {users.length &&
+        {users &&
           users
             // filter the array
             .filter((user) =>
