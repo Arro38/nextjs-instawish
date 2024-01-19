@@ -38,7 +38,7 @@ export default async function UserPage({ params }: { params: { id: string } }) {
           <CountFollower userId={userId} />
           <div className="flex flex-col  text-center">
             <span className="text-2xl font-bold">{following?.length}</span>
-            <span>Following</span>C
+            <span>Following</span>
           </div>
         </div>
         <div className="flex flex-col">
