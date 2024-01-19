@@ -1,4 +1,3 @@
-import NavBar from "@/components/main-nav";
 import { Button } from "@/components/ui/button";
 import CircleAvatar from "@/components/ui/circle-avatar";
 import FollowButton from "@/components/user/FollowButton";
@@ -7,6 +6,7 @@ import { ArrowLeftIcon, CheckCircledIcon } from "@radix-ui/react-icons";
 import Link from "next/link";
 import { cookies } from "next/headers";
 import GridPosts from "@/components/user/GridPosts";
+import CountFollower from "@/components/user/countFollowers";
 
 export default async function UserPage({ params }: { params: { id: string } }) {
   const token = cookies().get("token")?.value;
@@ -35,13 +35,10 @@ export default async function UserPage({ params }: { params: { id: string } }) {
             </span>
             <span>Posts</span>
           </div>
-          <div className="flex flex-col text-center">
-            <span className="text-2xl font-bold">{followers?.length}</span>
-            <span>Followers</span>
-          </div>
+          <CountFollower userId={userId} />
           <div className="flex flex-col  text-center">
             <span className="text-2xl font-bold">{following?.length}</span>
-            <span>Following</span>
+            <span>Following</span>C
           </div>
         </div>
         <div className="flex flex-col">

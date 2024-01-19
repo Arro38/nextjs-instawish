@@ -49,7 +49,7 @@ export class ApiService {
         throw new Error("Failed to fetch data");
       }
 
-      return res.data;
+      return res.data as User[];
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +65,7 @@ export class ApiService {
         throw new Error("Failed to fetch data");
       }
 
-      return res.data;
+      return res.data as User[];
     } catch (error) {
       console.log(error);
     }

@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { PlusIcon } from "@radix-ui/react-icons";
 import CircleAvatar from "./ui/circle-avatar";
 import { Dancing_Script } from "next/font/google";
@@ -25,6 +25,11 @@ function NavBar() {
   const router = useRouter();
   const dispatch = useAppDispatch();
   const user = useAppSelector((state) => state.users.user);
+  // const [user, setUser] = useState(me);
+
+  // useEffect(() => {
+  //   setUser(me);
+  // }, [me]);
 
   return (
     <nav className="flex justify-between items-center w-full ">

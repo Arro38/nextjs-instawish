@@ -11,8 +11,8 @@ export default function FollowButton({ user }: { user: User }) {
   const me = useAppSelector((state) => state.users.user);
   const token = Cookies.get("token");
   const dispatch = useAppDispatch();
-  const [isFollowing, setIsFollowing] = useState(false);
   const loading = useAppSelector((state) => state.users.loading);
+  const [isFollowing, setIsFollowing] = useState(false);
 
   const handleUnFollow = async () => {
     try {
@@ -36,17 +36,17 @@ export default function FollowButton({ user }: { user: User }) {
           token: token!,
         })
       );
-      // setIsFollowing(true);
+      setIsFollowing(true);
     } catch (err) {
       console.log(err);
     }
   };
 
-  // useEffect(() => {
-  //   if (followings!.find((following) => following.id === user.id))
-  //     setIsFollowing(true);
-  //   else setIsFollowing(false);
-  // }, [followings]);
+  useEffect(() => {
+    if (followings!.find((following) => following.id === user.id)) {
+      setIsFollowing(true);
+    }
+  }, [followings, user.id]);
 
   return (
     <>
@@ -54,7 +54,7 @@ export default function FollowButton({ user }: { user: User }) {
         <Button variant={"secondary"} disabled={loading}>
           Edit Profile
         </Button>
-      ) : followings!.find((following) => following.id === user.id) ? (
+      ) : isFollowing ? (
         <Button
           variant={"secondary"}
           disabled={loading}

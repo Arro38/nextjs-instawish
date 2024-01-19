@@ -17,6 +17,8 @@ import { Input } from "@/components/ui/input";
 import { toast } from "@/components/ui/use-toast";
 import { useLogin } from "@/hooks/auth/useLogin";
 import { useRouter } from "next/navigation";
+import { useAppDispatch } from "@/hooks/redux/useStore";
+import { fetchMe } from "@/lib/features/users/usersSlice";
 
 const FormSchema = z.object({
   username: z.string().min(4, {
@@ -44,18 +46,24 @@ export function LoginForm() {
 
   const { login } = useLogin();
   const router = useRouter();
+  const dispatch = useAppDispatch();
 
-  function onSubmit(data: z.infer<typeof FormSchema>) {
+  async function onSubmit(data: z.infer<typeof FormSchema>) {
     try {
-      login(data.username, data.password).then(() => {
+      const res = await login(data.username, data.password);
+      if (res) {
+        dispatch(fetchMe(res));
         toast({
           title: "Connexion réussie",
           description: "Vous êtes maintenant connecté",
         });
+
         router.push("/");
-      });
+        return;
+      }
+      // throw error if res is false
+      throw new Error("Nom d'utilisateur ou mot de passe incorrect");
     } catch (error) {
-      // TODO FIX TOAST ERROR ON LOGIN
       console.log(error);
       toast({
         title: "Erreur",
