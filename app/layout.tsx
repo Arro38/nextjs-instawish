@@ -30,6 +30,17 @@ export default function RootLayout({
             </>
           </StoreProvider>
           {/* Footer */}
+          <footer className="flex items-center justify-center gap-2">
+            <span className="text-slate-950">Made with ❤️ by </span>
+            <a
+              href="https://formaterz.fr"
+              target="_blank"
+              className="text-primary"
+            >
+              Etienne VAYTILINGOM
+            </a>
+            <span className="text-slate-950">© 2024</span>
+          </footer>
         </main>
       </body>
     </html>
