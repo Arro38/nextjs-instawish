@@ -19,6 +19,7 @@ import Link from "next/link";
 import { getTimeAgo } from "@/lib/utils";
 import FollowButton from "./user/FollowButton";
 import PostActions from "./post/post-action";
+import Image from "next/image";
 
 // Instagram post
 export default function Post({ post }: { post: Post }) {
@@ -59,7 +60,7 @@ export default function Post({ post }: { post: Post }) {
 
       {/* post image */}
       <div className="mt-3">
-        <img
+        <Image
           className="rounded-3xl w-full object-cover"
           src={process.env.NEXT_PUBLIC_BASE_URL! + post.imageUrl}
           alt="post"

@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useCallback, useState } from "react";
 import ImageViewer from "react-simple-image-viewer";
 
@@ -25,7 +26,7 @@ export default function GridPosts({ posts }: { posts: Post[] }) {
         {posts?.map((post, i) => (
           <div key={i} className="border border-white  w-1/3">
             {/* JSX content */}
-            <img
+            <Image
               className="  object-cover cursor-pointer"
               src={process.env.NEXT_PUBLIC_BASE_URL + post.imageUrl}
               alt={post.description}

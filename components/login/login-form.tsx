@@ -72,7 +72,7 @@ export function LoginForm() {
           name="username"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nom d'utilisateur</FormLabel>
+              <FormLabel>{"Nom d'utilisateur"}</FormLabel>
               <FormControl>
                 <Input placeholder="Nom d'utilisateur ..." {...field} />
               </FormControl>

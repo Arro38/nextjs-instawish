@@ -73,15 +73,26 @@ export class ApiService {
 
   getHomePosts = async () => {
     try {
-      // const url = process.env.NEXT_PUBLIC_API_URL + "home";
       const res = await this.instance.get("home");
       if (res.status > 250 && res.statusText !== "OK") {
-        // This will activate the closest `error.js` Error Boundary
         throw new Error("Failed to fetch data");
       }
       return res.data as Post[];
     } catch (error) {
       console.log(error);
+    }
+  };
+
+  editProfile = async (formData: FormData) => {
+    try {
+      const res = await this.instance.post("profile", formData);
+      if (res.status > 250 && res.statusText !== "OK") {
+        throw new Error("Failed to fetch data");
+      }
+      return true;
+    } catch (error) {
+      console.log(error);
+      return false;
     }
   };
 

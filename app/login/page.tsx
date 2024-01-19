@@ -27,7 +27,7 @@ export default function Login() {
 
       {/* Register */}
       <div className="flex items-center justify-center gap-2">
-        <span className="text-slate-950">Vous n'avez pas de compte ?</span>
+        <span className="text-slate-950">{"Vous n'avez pas de compte ?"}</span>
         <Link href="/register" className="text-sm">
           Inscrivez-vous
         </Link>

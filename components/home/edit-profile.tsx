@@ -1,6 +1,5 @@
 import * as React from "react";
 
-import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,11 +19,9 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import { useMediaQuery } from "@uidotdev/usehooks";
-import { useAppSelector } from "@/hooks/redux/useStore";
-import autoAnimate from "@formkit/auto-animate";
+import ProfileForm from "./profile-form";
 
 export function EditProfile() {
   const [open, setOpen] = React.useState(false);
@@ -71,58 +68,5 @@ export function EditProfile() {
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
-  );
-}
-//TODO SEND EDIT PROFILE FORM
-function ProfileForm({ className }: React.ComponentProps<"form">) {
-  const me = useAppSelector((state) => state.users.user);
-  const [showFileInput, setShowFileInput] = React.useState(false);
-  const parent = React.useRef(null);
-  React.useEffect(() => {
-    parent.current && autoAnimate(parent.current);
-  }, [parent]);
-  return (
-    <>
-      {me && (
-        <>
-          <form className={cn("grid items-start gap-4", className)}>
-            <div className="grid gap-2">
-              <Label htmlFor="email">Email</Label>
-              <Input
-                type="email"
-                id="email"
-                defaultValue={me.email}
-                name="email"
-              />
-            </div>
-            <div className="grid gap-2">
-              <Label htmlFor="username">Nom d'utilisateur</Label>
-              <Input id="username" defaultValue={me.username} name="username" />
-            </div>
-            {/* profilePicture */}
-            <div className="grid gap-2" ref={parent}>
-              <Label htmlFor="imageUrl">Image de profil</Label>
-              {!showFileInput && (
-                <img
-                  src={process.env.NEXT_PUBLIC_BASE_URL + me.imageUrl}
-                  alt={me.username}
-                  className="w-20"
-                />
-              )}
-              <Button
-                variant={showFileInput ? "destructive" : "outline"}
-                onClick={() => setShowFileInput(!showFileInput)}
-              >
-                {showFileInput ? "Annuler" : "Changer"}
-              </Button>
-              {showFileInput && (
-                <Input type="file" id="imageUrl" name="imageUrl" />
-              )}
-            </div>
-            <Button type="submit">Sauvegarder les changements</Button>
-          </form>
-        </>
-      )}
-    </>
   );
 }

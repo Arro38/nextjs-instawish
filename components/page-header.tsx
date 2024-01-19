@@ -1,4 +1,5 @@
 "use client";
+"use strict";
 import { useCurrentUser } from "@/hooks/auth/useCurrentUser";
 import { useAppDispatch, useAppSelector } from "@/hooks/redux/useStore";
 import {
