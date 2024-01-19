@@ -23,14 +23,12 @@ export default function RootLayout({
         <main className="flex min-h-screen flex-col items-center justify-start gap-4 p-6 w-96 md:w-2/3 lg:w-1/2 bg-background rounded-lg mx-auto">
           {/* NavBar */}
 
-          <StoreProvider
-            children={
-              <>
-                <ReduxHeader />
-                <Suspense>{children}</Suspense>
-              </>
-            }
-          />
+          <StoreProvider>
+            <>
+              <ReduxHeader />
+              <Suspense>{children}</Suspense>
+            </>
+          </StoreProvider>
           {/* Footer */}
         </main>
       </body>

@@ -19,14 +19,14 @@ export default function ReduxHeader() {
     if (token) {
       dispatch(fetchMe(token));
     }
-  }, [token]);
+  }, [token, dispatch]);
 
   useEffect(() => {
     if (me && token) {
       dispatch(fetchFollowers({ token: token, id: me.id }));
       dispatch(fetchFollowing({ token: token, id: me.id }));
     }
-  }, [me, token]);
+  }, [me, token, dispatch]);
   return (
     <>
       <Toaster />

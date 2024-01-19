@@ -35,21 +35,21 @@ export default function ProfileForm({
       formData.append("profilePicture", profilePicture);
       setFormData(formData);
     }
-  }, [profilePicture]);
+  }, [profilePicture, formData]);
 
   useEffect(() => {
     if (username) {
       formData.append("username", username);
       setFormData(formData);
     }
-  }, [username]);
+  }, [username, formData]);
 
   useEffect(() => {
     if (email) {
       formData.append("email", email);
       setFormData(formData);
     }
-  }, [email]);
+  }, [email, formData]);
 
   const handleSave = async () => {
     // e.preventDefault();
@@ -82,7 +82,7 @@ export default function ProfileForm({
               />
             </div>
             <div className="grid gap-2">
-              <Label htmlFor="username">Nom d'utilisateur</Label>
+              <Label htmlFor="username">{"Nom d'utilisateur"}</Label>
               <Input
                 id="username"
                 defaultValue={me.username}

@@ -14,7 +14,7 @@ export default function HomePosts() {
     api.getHomePosts().then((posts) => {
       setPosts(posts!);
     });
-  }, [followings]);
+  }, [followings, api]);
   return (
     <>
       {posts &&
