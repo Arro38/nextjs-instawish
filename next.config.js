@@ -1,4 +1,8 @@
 /** @type {import('next').NextConfig} */
-const nextConfig = {}
+const nextConfig = {
+  images: {
+    domains: ["symfony-instawish.formaterz.fr"],
+  },
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;

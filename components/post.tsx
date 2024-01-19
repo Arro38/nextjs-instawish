@@ -61,9 +61,11 @@ export default function Post({ post }: { post: Post }) {
       {/* post image */}
       <div className="mt-3">
         <Image
-          className="rounded-3xl w-full object-cover"
+          className="rounded-3xl  object-cover w-full"
           src={process.env.NEXT_PUBLIC_BASE_URL! + post.imageUrl}
           alt="post"
+          width={500}
+          height={500}
         />
         {/* post description */}
         <div className="flex items-center mt-2 w-full">

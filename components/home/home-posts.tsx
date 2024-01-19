@@ -7,14 +7,15 @@ import Post from "@/components/post";
 import { useAppSelector } from "@/hooks/redux/useStore";
 export default function HomePosts() {
   const token = Cookies.get("token");
-  const api = new ApiService(token!);
+
   const [posts, setPosts] = useState<Post[]>([]);
   const followings = useAppSelector((state) => state.users.followings);
   useEffect(() => {
+    const api = new ApiService(token!);
     api.getHomePosts().then((posts) => {
       setPosts(posts!);
     });
-  }, [followings, api]);
+  }, [followings, token]);
   return (
     <>
       {posts &&

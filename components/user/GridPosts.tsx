@@ -31,6 +31,8 @@ export default function GridPosts({ posts }: { posts: Post[] }) {
               src={process.env.NEXT_PUBLIC_BASE_URL + post.imageUrl}
               alt={post.description}
               onClick={() => openImageViewer(i)}
+              width={200}
+              height={200}
             />
           </div>
         ))}

@@ -98,6 +98,8 @@ export default function ProfileForm({
                   src={process.env.NEXT_PUBLIC_BASE_URL + me.imageUrl}
                   alt={me.username}
                   className="w-20"
+                  width={80}
+                  height={80}
                 />
               )}
               <Button
