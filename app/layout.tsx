@@ -30,7 +30,7 @@ export default function RootLayout({
             </>
           </StoreProvider>
           {/* Footer */}
-          <footer className="flex items-center justify-center gap-2">
+          <footer className="flex items-center justify-center gap-2 md:flex-row flex-col mt-8">
             <span className="text-slate-950">Made with ❤️ by </span>
             <a
               href="https://formaterz.fr"
