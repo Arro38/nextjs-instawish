@@ -1,7 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
-    domains: ["symfony-instawish.formaterz.fr"],
+    domains: ["symfony-instawish.coding974.com"],
   },
 };
 
